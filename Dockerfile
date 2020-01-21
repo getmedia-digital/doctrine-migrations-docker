@@ -29,6 +29,9 @@ RUN mkdir /srv/migrations \
 
 COPY .docker/migrations/config /srv/config
 
+RUN ln -s /srv/config/migrations.php /usr/bin/migrations.php \
+    && ln -s /srv/config/migrations-db.php /usr/bin/migrations-db.php
+
 VOLUME ["/srv/migrations"]
 WORKDIR /srv/migrations
 
