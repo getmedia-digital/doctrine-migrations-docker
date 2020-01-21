@@ -1,15 +1,19 @@
 <?php
 
-switch ($_ENV['DB_DRIVER']) {
-    case 'pdo_mysql':case 'mysql':case 'mysqli':
-        $port = 3306;
-        break;
-    case 'pdo_pgsql':case 'pgsql':
-        $port = 5432;
-        break;
-    default:
-        $port = 3306;
-        break;
+$port = 3306;
+
+if (isset($_ENV['DB_DRIVER'])) {
+    switch ($_ENV['DB_DRIVER']) {
+        case 'pdo_mysql':case 'mysql':case 'mysqli':
+            $port = 3306;
+            break;
+        case 'pdo_pgsql':case 'pgsql':
+            $port = 5432;
+            break;
+        default:
+            $port = 3306;
+            break;
+    }
 }
 
 return [
