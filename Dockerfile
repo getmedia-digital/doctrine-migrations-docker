@@ -12,11 +12,10 @@ RUN apk --virtual .doctrine-build --update add git wget curl && \
     mv /opt/composer.phar /usr/bin/composer && \
     chmod +x /usr/bin/composer && \
     git clone https://github.com/doctrine/migrations.git migrations && \
-    cd migrations && ls -la && \
+    cd migrations && \
     git checkout tags/$MIGRATIONS_VERSION && \
     cp ./box.json.dist ./box.json && \
     sh ./build-phar.sh && \
-    ls -la ./bin && \
     mv ./build/doctrine-migrations.phar /usr/bin/doctrine-migrations && \
     chmod +x /usr/bin/doctrine-migrations && \
     apk del .doctrine-build && \
@@ -24,7 +23,12 @@ RUN apk --virtual .doctrine-build --update add git wget curl && \
     rm -rf /opt/migrations && \
     rm -rf /var/cache/apk/*
 
-RUN mkdir /srv/migrations
+RUN mkdir /srv/migrations \
+    && mkdir /srv/config \
+    && chmod 777 /srv/config
+
+COPY .docker/migrations/config /srv/config
+
 VOLUME ["/srv/migrations"]
 WORKDIR /srv/migrations
 
