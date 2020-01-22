@@ -25,16 +25,12 @@ RUN apk --virtual .doctrine-build --update add git wget curl && \
     rm -rf /opt/migrations && \
     rm -rf /var/cache/apk/*
 
-RUN mkdir /srv/migrations \
-    && mkdir /srv/config \
-    && chmod 777 /srv/config
+RUN mkdir -p /srv/doctrine/migrations
 
-COPY .docker/migrations/config /srv/config
+COPY .docker/migrations/config/migrations.php /srv/doctrine/migrations.php
+COPY .docker/migrations/config/migrations-db.php /srv/doctrine/migrations-db.php
 
-RUN ln -s /srv/config/migrations.php /usr/bin/migrations.php \
-    && ln -s /srv/config/migrations-db.php /usr/bin/migrations-db.php
-
-VOLUME ["/srv/migrations"]
-WORKDIR /srv/migrations
+VOLUME ["/srv/doctrine/migrations"]
+WORKDIR /srv/doctrine
 
 ENTRYPOINT ["doctrine-migrations"]
