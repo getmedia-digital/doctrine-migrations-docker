@@ -17,10 +17,10 @@ if (isset($_ENV['DB_DRIVER'])) {
 }
 
 return [
-    'dbname' => $_ENV['DB_NAME'],
-    'user' => $_ENV['DB_USER'],
-    'password' => $_ENV['DB_PASSWORD'],
-    'host' => $_ENV['DB_HOST'],
+    'dbname' => (!empty($_ENV['DB_NAME']))?$_ENV['DB_NAME']:'defaultdb',
+    'user' => (!empty($_ENV['DB_USER']))?$_ENV['DB_USER']:'root',
+    'password' => (!empty($_ENV['DB_PASSWORD']))?$_ENV['DB_PASSWORD']:null,
+    'host' => (!empty($_ENV['DB_HOST']))?$_ENV['DB_HOST']:'localhost',
     'port' => (!empty($_ENV['DB_PORT']))?$_ENV['DB_PORT']:$port,
     'driver' => (!empty($_ENV['DB_DRIVER']))?$_ENV['DB_DRIVER']:'pdo_mysql',
 ];
